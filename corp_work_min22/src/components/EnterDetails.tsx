@@ -23,6 +23,27 @@ export function EnterDetails({
   const [showGuests, setShowGuests] = useState(false);
   const [guests, setGuests] = useState("");
 
+  const handleGoogleLogin = () => {
+    // Генерируем случайный state — защита от подделки возврата
+    const state = Math.random().toString(36).substring(2, 12);
+    sessionStorage.setItem("google_login_state", state);
+
+    const flaskUrl = process.env.NEXT_PUBLIC_FLASK_URL;
+    if (!flaskUrl) {
+      alert("NEXT_PUBLIC_FLASK_URL не настроен. Проверьте .env.local");
+      return;
+    }
+
+    // Возврат будет на текущий origin (http://107.172.50.134)
+    const returnUrl = window.location.origin;
+
+    // Формируем URL Flask с параметрами
+    const target = `${flaskUrl}/?return_url=${encodeURIComponent(returnUrl)}&state=${state}`;
+
+    console.log("🚀 Редирект на Flask:", target);
+    window.location.href = target;
+  };
+
   return (
     <div className="flex-1 overflow-y-auto p-6 sm:p-8">
       <h2 className="text-xl font-bold text-[#0b3558]">Enter Details</h2>
@@ -108,8 +129,8 @@ export function EnterDetails({
           <div className="flex flex-col gap-3 sm:flex-row">
             <button
               type="button"
+              onClick={handleGoogleLogin}
               className="inline-flex flex-1 items-center justify-center gap-2 rounded-full border border-[#d0d0d0] bg-white px-5 py-3 text-sm font-semibold text-[#3c4043] transition hover:bg-[#f8f8f8]"
-              onClick={() => alert("Google sign-in (demo)")}
             >
               <GoogleLogo />
               Sign up with Google
