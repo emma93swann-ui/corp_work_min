@@ -1,0 +1,10 @@
+{
+  "hostName": "James Coote",
+  "eventTitle": "delivr.to Enterprise Demo",
+  "durationMinutes": 30,
+  "locationText": "Web conferencing details provided upon confirmation.",
+  "description": "A chance to meet the team and explore the platform together.",
+  "slotStartHour": 9,
+  "slotEndHour": 20,
+  "availableWeekdays": [1, 2, 3, 4, 5]
+}
